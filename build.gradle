@@ -38,6 +38,7 @@ tasks.named('test') {
 
 tasks.jar {
 	manifest {
+		enabled = false
 		attributes["Main-Class"] = "com.randstad.portfolio.PortfolioApplication"
 	}
 }
