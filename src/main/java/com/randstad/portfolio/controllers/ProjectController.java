@@ -1,6 +1,5 @@
 package com.randstad.portfolio.controllers;
 
-import com.cloudinary.Cloudinary;
 import com.randstad.portfolio.domain.models.Project;
 import com.randstad.portfolio.domain.services.ProjectService;
 import org.springframework.http.ResponseEntity;

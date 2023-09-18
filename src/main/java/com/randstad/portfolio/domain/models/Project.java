@@ -1,7 +1,6 @@
 package com.randstad.portfolio.domain.models;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="projects")
