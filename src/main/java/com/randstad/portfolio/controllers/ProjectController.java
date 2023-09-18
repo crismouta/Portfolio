@@ -10,13 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins = "http://127.0.0.1:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class ProjectController {
 
     public final ProjectService projectService;
-
-
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
@@ -42,7 +40,7 @@ public class ProjectController {
 
     @DeleteMapping("/projects/{id}")
     public void deleteById(@PathVariable Long id){
-        this.projectService.deleteCharacter(id);
+        this.projectService.deleteProject(id);
     }
 
     @PutMapping("/projects/{id}")

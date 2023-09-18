@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -26,9 +27,8 @@ public class ProjectService {
     }
 
     public Project findById(Long id) {
-        var optionalCharacter = this.projectRepository.findById(id);
-        if(optionalCharacter.isEmpty()) throw new RuntimeException("El character con id: " + id + " no existe");
-        return optionalCharacter.get();
+        Optional<Project> optionalProject = this.projectRepository.findById(id);
+        return optionalProject.orElse(null);
     }
 
     public Project create(String title, MultipartFile img, String description,  String linkGitHub) throws IOException {
@@ -41,12 +41,12 @@ public class ProjectService {
 
     }
 
-    public void deleteCharacter(Long id) {
+    public void deleteProject(Long id) {
         this.projectRepository.deleteById(id);
     }
 
     public Project update(Long id, String title, MultipartFile img, String description,  String linkGitHub) throws IOException {
-        Project project = projectRepository.findById(id).orElse(null);
+        Project project = findById(id);
         if (project != null) {
             // Subir la nueva imagen a Cloudinary y obtener la URL
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
@@ -56,7 +56,7 @@ public class ProjectService {
             project.setTitle(title);
             project.setImg(imageUrl);
             project.setDescription(description);
-            project.setLinkGitHub(description);
+            project.setLinkGitHub(linkGitHub);
 
             return projectRepository.save(project);
         }
