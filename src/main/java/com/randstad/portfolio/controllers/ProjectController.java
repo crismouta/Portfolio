@@ -8,9 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
+@RequestMapping(path = "api/v1/projects")
 public class ProjectController {
 
     public final ProjectService projectService;
@@ -19,17 +18,17 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/projects")
+    @GetMapping
     public ResponseEntity<List<Project>> getAll(){
         return ResponseEntity.ok(this.projectService.findAll());
     }
 
-    @GetMapping("/projects/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Project> getById(@PathVariable Long id) {
         return ResponseEntity.ok(this.projectService.findById(id));
     }
 
-    @PostMapping("/projects")
+    @PostMapping()
     public ResponseEntity<Project> create(@RequestParam("title") String title,
                                           @RequestParam("img") MultipartFile img,
                                           @RequestParam("description") String description,
@@ -37,12 +36,12 @@ public class ProjectController {
         return ResponseEntity.ok(this.projectService.create(title, img, description, linkGitHub));
     }
 
-    @DeleteMapping("/projects/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
         this.projectService.deleteProject(id);
     }
 
-    @PutMapping("/projects/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Project> update(@PathVariable Long id, @RequestParam("title") String title,
                                           @RequestParam("img") MultipartFile img,
                                           @RequestParam("description") String description,
